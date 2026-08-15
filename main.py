@@ -1,5 +1,5 @@
 """
-Aura Career Studio - Root App Forwarder
+Aura Career Studio - Root ASGI Entrypoint
 """
 import os
 import uvicorn
