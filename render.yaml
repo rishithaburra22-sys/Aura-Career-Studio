@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: aura-career-studio
+    env: python
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt"
+    startCommand: "uvicorn app:app --host 0.0.0.0 --port $PORT --workers 1 --limit-concurrency 10"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.15
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GROQ_MODEL
+        value: "llama-3.3-70b-versatile"
