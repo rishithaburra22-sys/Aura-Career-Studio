@@ -81,7 +81,7 @@ class AnalysisRequest(BaseModel):
 # ============================================================================
 # API ENDPOINTS
 # ============================================================================
-@app.get("/health", tags=["System"])
+@app.api_route("/health", methods=["GET", "HEAD"], tags=["System"])
 async def health_check():
     """System health check and credentials status."""
     has_groq = bool(os.getenv("GROQ_API_KEY") and len(os.getenv("GROQ_API_KEY").strip()) > 10)
@@ -105,7 +105,7 @@ async def health_check():
     }
 
 
-@app.get("/sample-resumes", tags=["Samples"])
+@app.api_route("/sample-resumes", methods=["GET", "HEAD"], tags=["Samples"])
 async def list_sample_resumes():
     """List available pre-packaged resumes."""
     return [
@@ -114,7 +114,7 @@ async def list_sample_resumes():
     ]
 
 
-@app.get("/sample-resume/{key}", tags=["Samples"])
+@app.api_route("/sample-resume/{key}", methods=["GET", "HEAD"], tags=["Samples"])
 async def get_sample_resume(key: str):
     """Retrieve full text and parameters of a sample resume."""
     if key not in SAMPLE_RESUMES:
@@ -122,7 +122,7 @@ async def get_sample_resume(key: str):
     return SAMPLE_RESUMES[key]
 
 
-@app.get("/github-preview/{username}", tags=["GitHub"])
+@app.api_route("/github-preview/{username}", methods=["GET", "HEAD"], tags=["GitHub"])
 async def get_github_preview(username: str, token: Optional[str] = None):
     """Lightweight endpoint for fast UI avatar and repository preview badge."""
     res = github_profile_reviewer(username, token)
@@ -192,7 +192,7 @@ async def analyze_profile_stream(request: AnalysisRequest):
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
-    @app.get("/")
+    @app.api_route("/", methods=["GET", "HEAD"])
     async def serve_ui():
         index_path = STATIC_DIR / "index.html"
         if index_path.exists():
