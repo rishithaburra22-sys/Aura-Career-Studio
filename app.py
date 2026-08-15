@@ -188,3 +188,9 @@ if STATIC_DIR.exists():
         if index_path.exists():
             return FileResponse(str(index_path))
         return {"message": "Aura Career Studio API running. Visit /docs for OpenAPI specifications."}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
