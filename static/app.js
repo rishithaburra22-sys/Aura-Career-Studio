@@ -1,8 +1,8 @@
 /**
- * Aura Career Studio - Client-Side Controller
- * ============================================
- * Handles SSE live streaming, tab routing, ATS score meters, sample profiles,
- * GitHub avatar previews, Read Aloud TTS, and Export Studio.
+ * Aura Career Studio - Executive Client Controller
+ * ==================================================
+ * 8-Tool SSE Telemetry streaming, Cover Letter & LinkedIn pitch generator,
+ * 30-60-90 Day Strategic Plan, and Browser Speech Synthesis (TTS).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,8 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const suiteTabs = document.querySelectorAll('.suite-tab');
   const suitePanels = document.querySelectorAll('.suite-panel');
 
-  // Content Targets
-  const contentJobSearch = document.getElementById('content-job-search');
+  // Executive Cover Letter Targets
+  const hookText = document.getElementById('hook-text');
+  const coverLetterText = document.getElementById('cover-letter-text');
+  const inmailText = document.getElementById('inmail-text');
+
+  // 30-60-90 Day Plan Target
+  const contentOnboardingPlan = document.getElementById('content-onboarding-plan');
+
+  // ATS Targets
   const atsScoreNumber = document.getElementById('ats-score-number');
   const atsTierBadge = document.getElementById('ats-tier-badge');
   const atsFeedbackTitle = document.getElementById('ats-feedback-title');
@@ -47,11 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const atsMatchedPills = document.getElementById('ats-matched-pills');
   const atsMissingPills = document.getElementById('ats-missing-pills');
   const atsRewritesContainer = document.getElementById('ats-rewrites-container');
+
+  // Other Content Targets
   const contentSkillGaps = document.getElementById('content-skill-gaps');
   const contentPortfolioProjects = document.getElementById('content-portfolio-projects');
   const ghReposGrid = document.getElementById('gh-repos-grid');
   const contentGithubAudit = document.getElementById('content-github-audit');
   const contentInterviewPrep = document.getElementById('content-interview-prep');
+  const contentJobSearch = document.getElementById('content-job-search');
 
   // Modals & Menus
   const btnSamplesMenu = document.getElementById('btn-samples-menu');
@@ -78,9 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Application State
   let currentFile = null;
   let currentReportData = null;
+  let currentAudioUtterance = null;
 
   // --------------------------------------------------------------------------
-  // Theme Toggle (Light Ivory / Dark Obsidian)
+  // Theme Toggle (Light Pearl / Dark Luxe)
   // --------------------------------------------------------------------------
   const savedTheme = localStorage.getItem('aura_career_theme');
   if (savedTheme === 'dark') {
@@ -96,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // Configuration Settings (Groq API Key & GitHub Token)
+  // Configuration Settings
   // --------------------------------------------------------------------------
   if (cfgGroqKey) cfgGroqKey.value = localStorage.getItem('aura_groq_key') || '';
   if (cfgGithubToken) cfgGithubToken.value = localStorage.getItem('aura_gh_token') || '';
@@ -110,12 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cfgGroqKey) localStorage.setItem('aura_groq_key', cfgGroqKey.value.trim());
       if (cfgGithubToken) localStorage.setItem('aura_gh_token', cfgGithubToken.value.trim());
       configModal.classList.add('hidden');
-      alert('Preferences saved successfully!');
+      alert('Aura preferences saved successfully!');
     });
   }
 
   // --------------------------------------------------------------------------
-  // Sample Profiles Dropdown Loader
+  // Sample Profiles Dropdown
   // --------------------------------------------------------------------------
   if (btnSamplesMenu) {
     btnSamplesMenu.addEventListener('click', (e) => {
@@ -136,18 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!res.ok) throw new Error('Could not fetch sample resume');
         const data = await res.json();
 
-        // Populate fields
         rawResumeText.value = data.text;
         rawResumeText.classList.remove('hidden');
         inputTargetRole.value = data.target_role;
         inputGithubUser.value = data.github_username;
 
-        // Reset file input
         currentFile = null;
         resumeDropzone.classList.add('hidden');
         activeFileCard.classList.remove('hidden');
-        activeFileName.textContent = `${data.title} (Sample)`;
-        activeFileSize.textContent = `Preloaded Profile`;
+        activeFileName.textContent = `${data.title} (Preloaded)`;
+        activeFileSize.textContent = `Ready for Pipeline`;
         badgeResumeStatus.classList.remove('hidden');
 
         fetchGithubPreview(data.github_username);
@@ -160,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // Resume File Drag & Drop Handlers
+  // Resume Drag & Drop
   // --------------------------------------------------------------------------
   if (resumeDropzone) {
     resumeDropzone.addEventListener('click', () => resumeFileInput.click());
@@ -206,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activeFileCard.classList.remove('hidden');
     activeFileName.textContent = file.name;
     const kb = (file.size / 1024).toFixed(1);
-    activeFileSize.textContent = `${kb} KB • Ready for Analysis`;
+    activeFileSize.textContent = `${kb} KB • Ready for Parsing`;
     badgeResumeStatus.classList.remove('hidden');
   }
 
@@ -219,7 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Quick Role Autocomplete Chips
   roleChips.forEach(chip => {
     chip.addEventListener('click', () => {
       inputTargetRole.value = chip.getAttribute('data-role');
@@ -227,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // Live GitHub Avatar Preview Badge (Debounced)
+  // Live GitHub Avatar Preview
   // --------------------------------------------------------------------------
   let ghDebounceTimer = null;
   if (inputGithubUser) {
@@ -238,14 +246,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     });
 
-    // Initial fetch if value exists
     if (inputGithubUser.value.trim()) {
       fetchGithubPreview(inputGithubUser.value);
     }
   }
 
   async function fetchGithubPreview(username) {
-    const clean = username.trim().lstrip ? username.trim().lstrip('@') : username.replace('@', '').trim();
+    const clean = username.trim().replace('@', '').trim();
     if (!clean) {
       if (ghPreviewBadge) ghPreviewBadge.classList.add('hidden');
       return;
@@ -272,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // Suite Tabs Manager
+  // Suite Tab Switching
   // --------------------------------------------------------------------------
   suiteTabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -289,32 +296,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // Main Analysis Pipeline Execution (SSE Streaming + Fallback)
+  // Main Execution Pipeline (SSE Streaming)
   // --------------------------------------------------------------------------
   if (careerForm) {
     careerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const targetRole = inputTargetRole.value.trim() || 'Senior Software Engineer';
+      const targetRole = inputTargetRole.value.trim() || 'Staff AI / ML Systems Architect';
       const ghUser = inputGithubUser.value.trim();
       const customGroq = localStorage.getItem('aura_groq_key') || '';
       const customGh = localStorage.getItem('aura_gh_token') || '';
 
-      // Prepare text or file
       let resumeText = rawResumeText.value.trim();
 
-      // UI Progress Stepper Start
       btnSubmit.disabled = true;
-      btnSubmit.innerHTML = `<span class="spinner-sm"></span> Orchestrating 6 Tools...`;
+      btnSubmit.innerHTML = `<span class="spinner-sm"></span> Orchestrating 8 Tools...`;
       progressCard.classList.remove('hidden');
-      updateProgress(10, `Parsing candidate profile for ${targetRole}...`);
+      updateProgress(10, `Ingesting candidate dossier for ${targetRole}...`);
 
       if (suiteEmpty) suiteEmpty.classList.add('hidden');
 
       try {
-        // If file uploaded and no raw text, use /analyze multipart
         if (currentFile && !resumeText) {
-          updateProgress(30, `Extracting text from ${currentFile.name}...`);
+          updateProgress(25, `Extracting structure from ${currentFile.name}...`);
           const formData = new FormData();
           formData.append('resume_file', currentFile);
           formData.append('target_role', targetRole);
@@ -334,11 +338,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const report = await res.json();
           renderFullReport(report);
-          updateProgress(100, `Complete! Career intelligence report ready.`);
+          updateProgress(100, `Complete! Executive Talent Suite Ready.`);
           setTimeout(() => progressCard.classList.add('hidden'), 1200);
 
         } else {
-          // Use Real-Time SSE Stream with raw resume text
           if (!resumeText) {
             throw new Error('Please select a resume file or paste resume text.');
           }
@@ -369,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             buffer += decoder.decode(value, { stream: true });
             const lines = buffer.split('\n\n');
-            buffer = lines.pop(); // keep last partial chunk
+            buffer = lines.pop();
 
             for (const line of lines) {
               if (line.startsWith('data: ')) {
@@ -378,6 +381,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   const eventData = JSON.parse(jsonStr);
                   if (eventData.progress) {
                     updateProgress(eventData.progress, eventData.message || 'Processing...');
+                  }
+                  if (eventData.cover_letter_pitch) {
+                    renderCoverLetterSection(eventData.cover_letter_pitch);
                   }
                   if (eventData.ats_audit) {
                     renderAtsSection(eventData.ats_audit);
@@ -392,13 +398,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
 
-          updateProgress(100, `Career Intelligence Suite Ready!`);
+          updateProgress(100, `Executive Talent Suite Ready!`);
           setTimeout(() => progressCard.classList.add('hidden'), 1000);
         }
 
       } catch (err) {
         console.error(err);
-        alert(`Analysis Notice: ${err.message}`);
+        alert(`Notice: ${err.message}`);
         progressCard.classList.add('hidden');
       } finally {
         btnSubmit.disabled = false;
@@ -406,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
-          <span>Generate Career Intelligence</span>
+          <span>Generate Executive Intelligence</span>
         `;
       }
     });
@@ -419,69 +425,82 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // Report Renderers
+  // Renderers
   // --------------------------------------------------------------------------
   function renderFullReport(data) {
     currentReportData = data;
 
-    // 1. Job Search
-    if (contentJobSearch && data.job_search) {
-      contentJobSearch.innerHTML = marked.parse(data.job_search);
+    // 1. Cover Letter & InMail
+    if (data.cover_letter_pitch) {
+      renderCoverLetterSection(data.cover_letter_pitch);
     }
 
-    // 2. ATS Score & Optimizer
+    // 2. 30-60-90 Day Plan
+    if (contentOnboardingPlan && data.onboarding_roadmap) {
+      contentOnboardingPlan.innerHTML = marked.parse(data.onboarding_roadmap);
+    }
+
+    // 3. ATS
     if (data.ats_audit) {
       renderAtsSection(data.ats_audit);
     }
 
-    // 3. Skill Gaps
+    // 4. Skill Deficiencies
     if (contentSkillGaps && data.skill_gaps) {
       contentSkillGaps.innerHTML = marked.parse(data.skill_gaps);
     }
 
-    // 4. Portfolio Projects
+    // 5. Portfolio Blueprints
     if (contentPortfolioProjects && data.project_ideas) {
       contentPortfolioProjects.innerHTML = marked.parse(data.project_ideas);
     }
 
-    // 5. GitHub Audit
+    // 6. GitHub
     if (data.github_review) {
       renderGithubSection(data.github_review);
     }
 
-    // 6. Interview Prep
+    // 7. Interview Prep
     if (contentInterviewPrep && data.interview_prep) {
       contentInterviewPrep.innerHTML = marked.parse(data.interview_prep);
     }
 
-    // Show initial active tab panel
+    // 8. Job Search
+    if (contentJobSearch && data.job_search) {
+      contentJobSearch.innerHTML = marked.parse(data.job_search);
+    }
+
     const activeTab = document.querySelector('.suite-tab.active');
-    const targetId = activeTab ? activeTab.getAttribute('data-tab') : 'tab-job-search';
+    const targetId = activeTab ? activeTab.getAttribute('data-tab') : 'tab-cover-letter';
     activateSuiteTab(targetId);
+  }
+
+  function renderCoverLetterSection(cl) {
+    if (!cl) return;
+    if (hookText) hookText.textContent = cl.executive_hook || 'Executive candidate specialized in high-throughput architectures.';
+    if (coverLetterText) coverLetterText.innerText = cl.cover_letter || '';
+    if (inmailText) inmailText.innerText = cl.linkedin_pitch || '';
   }
 
   function renderAtsSection(ats) {
     if (!ats) return;
-    if (atsScoreNumber) atsScoreNumber.textContent = ats.ats_score || 80;
-    if (atsTierBadge) atsTierBadge.textContent = ats.score_tier || 'Competitive';
-    if (atsFeedbackText) atsFeedbackText.textContent = ats.summary_feedback || 'ATS parameters audited.';
+    if (atsScoreNumber) atsScoreNumber.textContent = ats.ats_score || 88;
+    if (atsTierBadge) atsTierBadge.textContent = ats.score_tier || 'Highly Competitive';
+    if (atsFeedbackText) atsFeedbackText.textContent = ats.summary_feedback || 'Executive ATS parameters audited.';
 
-    // Matched Pills
     if (atsMatchedPills && ats.matched_keywords) {
       atsMatchedPills.innerHTML = ats.matched_keywords.map(kw => `<span class="kw-pill kw-matched">✓ ${escapeHtml(kw)}</span>`).join('');
     }
 
-    // Missing Pills
     if (atsMissingPills && ats.missing_keywords) {
       atsMissingPills.innerHTML = ats.missing_keywords.map(kw => `<span class="kw-pill kw-missing">+ ${escapeHtml(kw)}</span>`).join('');
     }
 
-    // Bullet Rewrites
     if (atsRewritesContainer && ats.bullet_rewrites) {
       atsRewritesContainer.innerHTML = ats.bullet_rewrites.map(item => `
         <div class="rewrite-item">
           <div class="rewrite-orig">❌ "${escapeHtml(item.original)}"</div>
-          <div class="rewrite-imp">⚡ "${escapeHtml(item.improved)}"</div>
+          <div class="rewrite-imp">✨ "${escapeHtml(item.improved)}"</div>
         </div>
       `).join('');
     }
@@ -497,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (gh.top_repos && gh.top_repos.length > 0) {
         ghReposGrid.innerHTML = gh.top_repos.map(r => `
           <a href="${r.html_url}" target="_blank" rel="noopener noreferrer" class="repo-card">
-            <span class="repo-title">📁 ${escapeHtml(r.name)}</span>
+            <span class="repo-title">📂 ${escapeHtml(r.name)}</span>
             <p class="repo-desc">${escapeHtml(r.description)}</p>
             <div class="repo-meta-row">
               <span>● ${escapeHtml(r.language)}</span>
@@ -512,7 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // Read Aloud & 1-Click Copy Handlers
+  // Read Aloud (Browser Speech Synthesis)
   // --------------------------------------------------------------------------
   document.querySelectorAll('.btn-action-read').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -520,24 +539,32 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetEl = document.getElementById(targetId);
       if (!targetEl) return;
 
-      if ('speechSynthesis' in window) {
-        if (window.speechSynthesis.speaking) {
-          window.speechSynthesis.cancel();
-          btn.textContent = '🔊 Read Aloud';
-        } else {
-          const plain = targetEl.innerText;
-          const utterance = new SpeechSynthesisUtterance(plain);
-          utterance.rate = 1.05;
-          utterance.onend = () => { btn.textContent = '🔊 Read Aloud'; };
-          window.speechSynthesis.speak(utterance);
-          btn.textContent = '⏹ Stop Audio';
-        }
-      } else {
-        alert('Voice synthesis not supported in this browser.');
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        btn.textContent = '🔊 Read Aloud';
+        return;
       }
+
+      const text = targetEl.innerText.trim();
+      if (!text) return;
+
+      currentAudioUtterance = new SpeechSynthesisUtterance(text);
+      currentAudioUtterance.rate = 1.0;
+      currentAudioUtterance.pitch = 1.0;
+
+      btn.textContent = '⏹ Stop Audio';
+
+      currentAudioUtterance.onend = () => {
+        btn.textContent = '🔊 Read Aloud';
+      };
+
+      window.speechSynthesis.speak(currentAudioUtterance);
     });
   });
 
+  // --------------------------------------------------------------------------
+  // 1-Click Copy
+  // --------------------------------------------------------------------------
   document.querySelectorAll('.btn-action-copy').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
@@ -553,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // Export Studio Handlers
+  // Export Studio
   // --------------------------------------------------------------------------
   if (btnExportStudio) btnExportStudio.addEventListener('click', () => exportModal.classList.remove('hidden'));
   if (btnCloseExport) btnCloseExport.addEventListener('click', () => exportModal.classList.add('hidden'));
@@ -562,26 +589,33 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExportMarkdown) {
     btnExportMarkdown.addEventListener('click', () => {
       if (!currentReportData) {
-        alert('Please run a career analysis first before exporting.');
+        alert('Please generate an executive analysis first before exporting.');
         return;
       }
 
-      let md = `# Aura Career Intelligence Dossier\n`;
-      md += `**Target Role:** ${currentReportData.target_role}\n`;
-      md += `**Date:** ${new Date().toLocaleDateString()}\n\n---\n\n`;
+      let md = `# Aura Executive Talent Dossier\n`;
+      md += `**Target Position:** ${currentReportData.target_role}\n`;
+      md += `**Generated:** ${new Date().toLocaleDateString()}\n\n---\n\n`;
 
-      if (currentReportData.ats_audit) {
-        md += `## 1. ATS Score & Keyword Audit\n`;
-        md += `- **Score:** ${currentReportData.ats_audit.ats_score}/100 (${currentReportData.ats_audit.score_tier})\n`;
-        md += `- **Feedback:** ${currentReportData.ats_audit.summary_feedback}\n\n`;
+      if (currentReportData.cover_letter_pitch) {
+        md += `## 1. Executive Cover Letter\n${currentReportData.cover_letter_pitch.cover_letter}\n\n`;
+        md += `## 2. LinkedIn InMail Pitch\n${currentReportData.cover_letter_pitch.linkedin_pitch}\n\n---\n\n`;
       }
 
-      if (currentReportData.job_search) md += `## 2. Job Search Roadmap\n${currentReportData.job_search}\n\n---\n\n`;
-      if (currentReportData.skill_gaps) md += `## 3. Skill Gaps & Learning Roadmap\n${currentReportData.skill_gaps}\n\n---\n\n`;
-      if (currentReportData.project_ideas) md += `## 4. High-Impact Portfolio Blueprints\n${currentReportData.project_ideas}\n\n---\n\n`;
-      if (currentReportData.interview_prep) md += `## 5. Interview Prep & STAR Questions\n${currentReportData.interview_prep}\n\n`;
+      if (currentReportData.onboarding_roadmap) {
+        md += `## 3. 30-60-90 Day Strategic Onboarding Roadmap\n${currentReportData.onboarding_roadmap}\n\n---\n\n`;
+      }
 
-      downloadBlob(md, `aura_career_dossier_${Date.now()}.md`, 'text/markdown');
+      if (currentReportData.ats_audit) {
+        md += `## 4. ATS Match Audit\nScore: ${currentReportData.ats_audit.ats_score}/100\n\n`;
+      }
+
+      if (currentReportData.project_ideas) md += `## 5. Enterprise Portfolio Blueprints\n${currentReportData.project_ideas}\n\n---\n\n`;
+      if (currentReportData.skill_gaps) md += `## 6. Strategic Skill & Leadership Gaps\n${currentReportData.skill_gaps}\n\n---\n\n`;
+      if (currentReportData.interview_prep) md += `## 7. STAR Interview Simulation\n${currentReportData.interview_prep}\n\n---\n\n`;
+      if (currentReportData.job_search) md += `## 8. Executive Job Search Strategy\n${currentReportData.job_search}\n\n`;
+
+      downloadBlob(md, `aura_executive_dossier_${Date.now()}.md`, 'text/markdown');
       exportModal.classList.add('hidden');
     });
   }
@@ -589,11 +623,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExportJson) {
     btnExportJson.addEventListener('click', () => {
       if (!currentReportData) {
-        alert('Please run a career analysis first before exporting.');
+        alert('Please generate an executive analysis first before exporting.');
         return;
       }
       const jsonStr = JSON.stringify(currentReportData, null, 2);
-      downloadBlob(jsonStr, `aura_career_audit_${Date.now()}.json`, 'application/json');
+      downloadBlob(jsonStr, `aura_executive_audit_${Date.now()}.json`, 'application/json');
       exportModal.classList.add('hidden');
     });
   }

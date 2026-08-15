@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aura Career Studio — AI Talent Intelligence & Career Strategist</title>
-  <meta name="description" content="AI-Powered Career Intelligence Platform powered by LangChain Tools, Groq Llama 3.3 70B, ATS Optimization, and Live GitHub Mining.">
+  <title>Aura Career Studio — Executive Talent Intelligence &amp; Career Suite</title>
+  <meta name="description" content="Executive AI Career Intelligence Suite powered by 8 specialized AI tools, Cover Letter & LinkedIn pitch generator, 30-60-90 day roadmaps, ATS Optimization, and Live GitHub Mining.">
   
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   
   <!-- Markdown Parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -18,62 +18,60 @@
 <body>
 
   <div class="aura-app">
-    <!-- Top Navigation Header -->
+    <!-- Top Executive Navigation -->
     <header class="aura-nav" title="Aura Career Studio Header">
       <div class="nav-left">
         <div class="nav-brand">
-          <div class="brand-badge">A</div>
+          <div class="brand-badge-aura">A</div>
           <div class="brand-titles">
             <span class="brand-name">AURA CAREER STUDIO</span>
-            <span class="brand-tag">LangChain • Groq Llama 3.3 70B • GitHub Mining</span>
+            <span class="brand-tag">Executive Talent Suite • 8 AI Tools • Groq Llama 3.3 70B</span>
           </div>
         </div>
 
         <div class="telemetry-pills">
-          <div class="pill">
+          <div class="pill pill-indigo">
+            <span class="pill-dot pill-dot-indigo"></span>
+            <span>8 AI Tools</span>
+          </div>
+          <div class="pill pill-rose">
+            <span class="pill-dot pill-dot-rose"></span>
+            <span>Cover Letter + Pitch</span>
+          </div>
+          <div class="pill pill-emerald">
             <span class="pill-dot pill-dot-emerald"></span>
-            <span>6 AI Tools</span>
-          </div>
-          <div class="pill">
-            <span class="pill-dot pill-dot-blue"></span>
-            <span>ATS Engine</span>
-          </div>
-          <div class="pill">
-            <span class="pill-dot pill-dot-amber"></span>
-            <span>Live GitHub API</span>
+            <span>30-60-90 Day Plan</span>
           </div>
         </div>
       </div>
 
       <div class="nav-right">
-        <!-- Sample Resumes Dropdown -->
+        <!-- Sample Profiles Dropdown -->
         <div class="dropdown-container">
-          <button id="btn-samples-menu" class="btn btn-secondary btn-sm" title="Load a pre-packaged resume profile">
+          <button id="btn-samples-menu" class="btn btn-secondary btn-sm" title="Load an executive candidate profile">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="12" y1="18" x2="12" y2="12"></line>
-              <line x1="9" y1="15" x2="15" y2="15"></line>
             </svg>
-            <span>Sample Profiles</span>
+            <span>Executive Profiles</span>
           </button>
           <div id="samples-dropdown" class="dropdown-menu hidden">
             <button class="dropdown-item" data-sample="fullstack">
-              <strong>Senior Full-Stack Engineer</strong>
-              <small>React, TypeScript, Node.js, AWS</small>
+              <strong>Senior Full-Stack Lead</strong>
+              <small>React, TypeScript, FastAPI, AWS</small>
             </button>
             <button class="dropdown-item" data-sample="aiml">
-              <strong>Staff AI / ML Engineer</strong>
-              <small>PyTorch, LLMs, FAISS, LangChain</small>
+              <strong>Staff AI / ML Systems Architect</strong>
+              <small>PyTorch, LLMs, vLLM, LangChain</small>
             </button>
             <button class="dropdown-item" data-sample="devops">
-              <strong>Cloud DevOps / SRE Lead</strong>
-              <small>Kubernetes, Terraform, AWS, CI/CD</small>
+              <strong>VP / Director of Infrastructure &amp; SRE</strong>
+              <small>Kubernetes, Terraform, Multi-Cloud</small>
             </button>
           </div>
         </div>
 
-        <button id="btn-export-studio" class="btn btn-ghost btn-sm" title="Export full report as Markdown, PDF, or JSON">
+        <button id="btn-export-studio" class="btn btn-ghost btn-sm" title="Export complete executive dossier">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
@@ -82,21 +80,15 @@
           <span>Export Studio</span>
         </button>
 
-        <button id="btn-theme-toggle" class="btn btn-ghost btn-icon" title="Toggle Light / Dark theme" aria-label="Toggle Theme">
+        <button id="btn-theme-toggle" class="btn btn-ghost btn-icon" title="Toggle Light Pearl / Dark Luxe theme" aria-label="Toggle Theme">
           <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
         </button>
 
-        <button id="btn-config-toggle" class="btn btn-ghost btn-icon" title="API Credentials & Settings" aria-label="Settings">
+        <button id="btn-config-toggle" class="btn btn-ghost btn-icon" title="Settings" aria-label="Settings">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -108,7 +100,7 @@
     <!-- Main Workspace Layout -->
     <main class="aura-workbench">
       
-      <!-- Left Column: Candidate Profile Input Desk -->
+      <!-- Left Column: Executive Dossier Desk -->
       <aside class="workbench-sidebar">
         <div class="sidebar-card">
           
@@ -117,15 +109,15 @@
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
-            <span>Candidate Profile Inputs</span>
+            <span>Candidate Dossier Inputs</span>
           </div>
 
           <form id="career-form" class="career-form">
             
-            <!-- Resume Upload / Dropzone -->
+            <!-- Resume Dropzone -->
             <div class="form-group">
               <label class="form-label">
-                <span>Resume Document (PDF, DOCX, TXT)</span>
+                <span>Executive Resume / Dossier</span>
                 <span id="badge-resume-status" class="status-tag hidden">Uploaded</span>
               </label>
 
@@ -135,12 +127,10 @@
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="dropzone-icon">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                    <line x1="9" y1="15" x2="15" y2="15"></line>
                   </svg>
                   <div class="dropzone-text">
-                    <span class="dropzone-prompt">Drop resume file here or <span class="browse-link">browse</span></span>
-                    <span class="dropzone-sub">PDF, Word, Markdown, or Plain Text</span>
+                    <span class="dropzone-prompt">Drop executive resume or <span class="browse-link">browse</span></span>
+                    <span class="dropzone-sub">PDF, Word, Markdown, or JSON</span>
                   </div>
                 </div>
               </div>
@@ -148,10 +138,10 @@
               <!-- Active File Card -->
               <div id="active-file-card" class="active-file-card hidden">
                 <div class="file-info-left">
-                  <div class="file-icon">📄</div>
+                  <div class="file-icon">💼</div>
                   <div class="file-details">
                     <span id="active-file-name" class="file-name">resume.pdf</span>
-                    <span id="active-file-size" class="file-meta">12 KB • Ready</span>
+                    <span id="active-file-size" class="file-meta">Ready for Intelligence Pipeline</span>
                   </div>
                 </div>
                 <button type="button" id="btn-change-resume" class="btn-change-file">Replace</button>
@@ -160,46 +150,46 @@
               <!-- Raw Text Toggle -->
               <div class="text-toggle-row">
                 <button type="button" id="btn-toggle-raw-text" class="text-link-btn">
-                  <span>Or paste raw resume text</span>
+                  <span>Or paste executive biography / text</span>
                 </button>
               </div>
 
-              <textarea id="raw-resume-text" class="raw-textarea hidden" placeholder="Paste full resume text, work experience, and skills here..." rows="6"></textarea>
+              <textarea id="raw-resume-text" class="raw-textarea hidden" placeholder="Paste full resume, achievements, and leadership history here..." rows="6"></textarea>
             </div>
 
             <!-- Target Role Input -->
             <div class="form-group">
               <label class="form-label" for="input-target-role">
-                <span>Target Job Role</span>
+                <span>Target Leadership Position</span>
                 <span class="label-hint">Required</span>
               </label>
-              <input type="text" id="input-target-role" class="form-input" placeholder="e.g. Senior Full-Stack Engineer" value="Senior Full-Stack Engineer" required>
+              <input type="text" id="input-target-role" class="form-input" placeholder="e.g. Staff AI / ML Systems Architect" value="Staff AI / ML Systems Architect" required>
               
               <!-- Quick Role Autocomplete Chips -->
               <div class="role-chips">
-                <button type="button" class="role-chip" data-role="Staff AI / ML Engineer">Staff AI / ML</button>
-                <button type="button" class="role-chip" data-role="Senior Full-Stack Engineer">Full-Stack</button>
-                <button type="button" class="role-chip" data-role="Cloud DevOps / SRE Lead">DevOps / SRE</button>
-                <button type="button" class="role-chip" data-role="Distributed Systems Architect">Systems Architect</button>
+                <button type="button" class="role-chip" data-role="Staff AI / ML Systems Architect">Staff AI / ML</button>
+                <button type="button" class="role-chip" data-role="Senior Engineering Lead">Engineering Lead</button>
+                <button type="button" class="role-chip" data-role="VP / Director of Engineering">VP of Eng</button>
+                <button type="button" class="role-chip" data-role="Principal Cloud Architect">Principal Architect</button>
               </div>
             </div>
 
             <!-- GitHub Profile Input -->
             <div class="form-group">
               <label class="form-label" for="input-github-user">
-                <span>GitHub Username (Optional)</span>
-                <span class="label-hint">For live portfolio audit</span>
+                <span>GitHub Handle (Optional)</span>
+                <span class="label-hint">For open-source audit</span>
               </label>
               <div class="input-with-icon">
                 <span class="input-prefix">@</span>
-                <input type="text" id="input-github-user" class="form-input with-prefix" placeholder="username" value="torvalds">
+                <input type="text" id="input-github-user" class="form-input with-prefix" placeholder="username" value="karpathy">
               </div>
 
               <!-- Live GitHub Avatar Preview Badge -->
               <div id="gh-preview-badge" class="gh-preview-badge hidden">
                 <img id="gh-avatar" src="" alt="Avatar" class="gh-avatar-img">
                 <div class="gh-info">
-                  <span id="gh-name" class="gh-name">User</span>
+                  <span id="gh-name" class="gh-name">Candidate</span>
                   <span id="gh-meta" class="gh-meta">0 public repos</span>
                 </div>
               </div>
@@ -210,7 +200,7 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
               </svg>
-              <span>Generate Career Intelligence</span>
+              <span>Generate Executive Intelligence</span>
             </button>
 
           </form>
@@ -226,7 +216,7 @@
           <div class="progress-header">
             <div class="progress-info">
               <div class="spinner-sm"></div>
-              <span id="progress-status-text">Orchestrating AI career intelligence agents...</span>
+              <span id="progress-status-text">Orchestrating 8 Executive AI tools...</span>
             </div>
             <span id="progress-percent" class="progress-num">0%</span>
           </div>
@@ -239,15 +229,22 @@
         <div class="suite-card">
           <div class="suite-tabs-header">
             <div class="suite-tabs">
-              <button class="suite-tab active" data-tab="tab-job-search">
+              <button class="suite-tab active" data-tab="tab-cover-letter">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="22" y1="12" x2="18" y2="12"></line>
-                  <line x1="6" y1="12" x2="2" y2="12"></line>
-                  <line x1="12" y1="6" x2="12" y2="2"></line>
-                  <line x1="12" y1="22" x2="12" y2="18"></line>
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span>Job Strategies</span>
+                <span>Cover Letter &amp; InMail</span>
+              </button>
+
+              <button class="suite-tab" data-tab="tab-onboarding-plan">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>30-60-90 Day Plan</span>
               </button>
 
               <button class="suite-tab" data-tab="tab-ats-score">
@@ -256,23 +253,22 @@
                   <line x1="12" y1="20" x2="12" y2="4"></line>
                   <line x1="6" y1="20" x2="6" y2="14"></line>
                 </svg>
-                <span>ATS Score &amp; Keywords</span>
+                <span>ATS &amp; Keyword Score</span>
               </button>
 
               <button class="suite-tab" data-tab="tab-skill-gaps">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>Skill Gaps</span>
+                <span>Leadership Gaps</span>
               </button>
 
               <button class="suite-tab" data-tab="tab-portfolio-projects">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                   <polyline points="2 17 12 22 22 17"></polyline>
-                  <polyline points="2 12 12 17 22 12"></polyline>
                 </svg>
-                <span>Portfolio Blueprints</span>
+                <span>Enterprise Blueprints</span>
               </button>
 
               <button class="suite-tab" data-tab="tab-github-audit">
@@ -286,7 +282,15 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
-                <span>Interview Prep</span>
+                <span>STAR Interview Prep</span>
+              </button>
+
+              <button class="suite-tab" data-tab="tab-job-search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="22" y1="12" x2="18" y2="12"></line>
+                </svg>
+                <span>Executive Search</span>
               </button>
             </div>
           </div>
@@ -301,26 +305,65 @@
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg>
               </div>
-              <h3>Ready to Generate Career Intelligence</h3>
-              <p>Upload a resume on the left or select a <strong>Sample Profile</strong> above to run all 6 specialized LangChain career tools.</p>
+              <h3>Aura Executive Talent Suite Ready</h3>
+              <p>Upload a candidate dossier on the left or select an <strong>Executive Profile</strong> to generate cover letters, 30-60-90 day plans, and ATS intelligence.</p>
             </div>
 
-            <!-- Panel 1: Job Search -->
-            <div id="panel-tab-job-search" class="suite-panel hidden">
+            <!-- Panel 1: Cover Letter & LinkedIn Pitch -->
+            <div id="panel-tab-cover-letter" class="suite-panel hidden">
               <div class="panel-header">
                 <div class="panel-title">
-                  <h4>Strategic Job Search &amp; Market Intelligence</h4>
-                  <span class="panel-tag">Target Companies &amp; Platforms</span>
+                  <h4>Tailored Cover Letter &amp; LinkedIn InMail Pitch</h4>
+                  <span class="panel-tag">High-Converting Application Copy</span>
                 </div>
                 <div class="panel-actions">
-                  <button class="btn-action-read" data-target="content-job-search">🔊 Read Aloud</button>
-                  <button class="btn-action-copy" data-target="content-job-search">📋 Copy</button>
+                  <button class="btn-action-read" data-target="content-cover-letter">🔊 Read Aloud</button>
+                  <button class="btn-action-copy" data-target="content-cover-letter">📋 Copy Letter</button>
                 </div>
               </div>
-              <div id="content-job-search" class="markdown-content"></div>
+
+              <!-- Executive Hook Card -->
+              <div class="executive-hook-card">
+                <span class="hook-label">🌟 Core Value Proposition Hook</span>
+                <p id="hook-text" class="hook-text">Upload a resume to generate an executive pitch.</p>
+              </div>
+
+              <!-- Cover Letter & InMail Grid -->
+              <div class="cover-inmail-grid">
+                <div class="copy-box">
+                  <div class="copy-box-header">
+                    <h6>Executive Cover Letter</h6>
+                    <button class="btn-action-copy" data-target="cover-letter-text">Copy Letter</button>
+                  </div>
+                  <div id="cover-letter-text" class="copy-box-body"></div>
+                </div>
+
+                <div class="copy-box">
+                  <div class="copy-box-header">
+                    <h6>LinkedIn / InMail Cold Outreach Pitch</h6>
+                    <button class="btn-action-copy" data-target="inmail-text">Copy InMail</button>
+                  </div>
+                  <div id="inmail-text" class="copy-box-body"></div>
+                </div>
+              </div>
             </div>
 
-            <!-- Panel 2: ATS Score & Optimizer -->
+            <!-- Panel 2: 30-60-90 Day Plan -->
+            <div id="panel-tab-onboarding-plan" class="suite-panel hidden">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <h4>30-60-90 Day Strategic Onboarding Roadmap</h4>
+                  <span class="panel-tag">Leadership Milestones &amp; Success KPIs</span>
+                </div>
+                <div class="panel-actions">
+                  <button class="btn-action-read" data-target="content-onboarding-plan">🔊 Read Aloud</button>
+                  <button class="btn-action-copy" data-target="content-onboarding-plan">📋 Copy Plan</button>
+                </div>
+              </div>
+              <div id="content-onboarding-plan" class="markdown-content"></div>
+            </div>
+
+            <!-- Panel 3: ATS Score & Keywords -->
             <div id="panel-tab-ats-score" class="suite-panel hidden">
               <div class="panel-header">
                 <div class="panel-title">
@@ -366,12 +409,12 @@
               </div>
             </div>
 
-            <!-- Panel 3: Skill Gaps -->
+            <!-- Panel 4: Skill Gaps -->
             <div id="panel-tab-skill-gaps" class="suite-panel hidden">
               <div class="panel-header">
                 <div class="panel-title">
-                  <h4>Technical Skill Gap &amp; Learning Roadmap</h4>
-                  <span class="panel-tag">Architectural Deficiencies &amp; Timelines</span>
+                  <h4>Strategic Competency Gaps &amp; Roadmap</h4>
+                  <span class="panel-tag">Architectural Leadership &amp; Timelines</span>
                 </div>
                 <div class="panel-actions">
                   <button class="btn-action-read" data-target="content-skill-gaps">🔊 Read Aloud</button>
@@ -381,12 +424,12 @@
               <div id="content-skill-gaps" class="markdown-content"></div>
             </div>
 
-            <!-- Panel 4: Portfolio Projects -->
+            <!-- Panel 5: Portfolio Projects -->
             <div id="panel-tab-portfolio-projects" class="suite-panel hidden">
               <div class="panel-header">
                 <div class="panel-title">
-                  <h4>High-Impact Portfolio Project Blueprints</h4>
-                  <span class="panel-tag">Production-Grade System Designs</span>
+                  <h4>Enterprise System Design Blueprints</h4>
+                  <span class="panel-tag">Production-Grade Architectures</span>
                 </div>
                 <div class="panel-actions">
                   <button class="btn-action-read" data-target="content-portfolio-projects">🔊 Read Aloud</button>
@@ -396,7 +439,7 @@
               <div id="content-portfolio-projects" class="markdown-content"></div>
             </div>
 
-            <!-- Panel 5: GitHub Audit -->
+            <!-- Panel 6: GitHub Audit -->
             <div id="panel-tab-github-audit" class="suite-panel hidden">
               <div class="panel-header">
                 <div class="panel-title">
@@ -410,17 +453,15 @@
 
               <!-- Top Repos Grid -->
               <div id="gh-repos-grid" class="gh-repos-grid"></div>
-
-              <!-- AI Analysis -->
               <div id="content-github-audit" class="markdown-content"></div>
             </div>
 
-            <!-- Panel 6: Interview Prep -->
+            <!-- Panel 7: Interview Prep -->
             <div id="panel-tab-interview-prep" class="suite-panel hidden">
               <div class="panel-header">
                 <div class="panel-title">
-                  <h4>Tailored Interview Simulation &amp; STAR Guide</h4>
-                  <span class="panel-tag">System Design &amp; Behavioral Questions</span>
+                  <h4>Executive STAR Interview Simulation</h4>
+                  <span class="panel-tag">System Architecture &amp; Behavioral Scenarios</span>
                 </div>
                 <div class="panel-actions">
                   <button class="btn-action-read" data-target="content-interview-prep">🔊 Read Aloud</button>
@@ -428,6 +469,21 @@
                 </div>
               </div>
               <div id="content-interview-prep" class="markdown-content"></div>
+            </div>
+
+            <!-- Panel 8: Job Search -->
+            <div id="panel-tab-job-search" class="suite-panel hidden">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <h4>Executive Job Market Strategy</h4>
+                  <span class="panel-tag">Target Companies &amp; Executive Platforms</span>
+                </div>
+                <div class="panel-actions">
+                  <button class="btn-action-read" data-target="content-job-search">🔊 Read Aloud</button>
+                  <button class="btn-action-copy" data-target="content-job-search">📋 Copy</button>
+                </div>
+              </div>
+              <div id="content-job-search" class="markdown-content"></div>
             </div>
 
           </div>
@@ -438,7 +494,7 @@
     </main>
 
     <!-- Configuration Drawer Modal -->
-    <div id="config-modal" class="config-drawer hidden" title="Engine Settings">
+    <div id="config-modal" class="config-drawer hidden" title="Settings">
       <div class="config-backdrop" id="config-backdrop"></div>
       <div class="config-card">
         <div class="config-header">
@@ -447,7 +503,7 @@
               <circle cx="12" cy="12" r="3"></circle>
               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
-            <h3>Engine Credentials &amp; Settings</h3>
+            <h3>Aura Engine Credentials</h3>
           </div>
           <button id="btn-close-config" class="btn-close">&times;</button>
         </div>
@@ -455,13 +511,13 @@
           <div class="form-group">
             <label class="form-label" for="cfg-groq-key">Custom Groq API Key</label>
             <input type="password" id="cfg-groq-key" class="form-input" placeholder="gsk_...">
-            <small class="field-hint">Optional. Stored strictly in your local browser session.</small>
+            <small class="field-hint">Stored strictly in local browser storage.</small>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="cfg-github-token">Custom GitHub Personal Access Token</label>
+            <label class="form-label" for="cfg-github-token">Custom GitHub Token</label>
             <input type="password" id="cfg-github-token" class="form-input" placeholder="ghp_...">
-            <small class="field-hint">Optional. Increases GitHub API rate limits from 60 to 5,000 requests/hr.</small>
+            <small class="field-hint">Increases GitHub REST API rate limits.</small>
           </div>
 
           <button type="button" id="btn-save-config" class="btn btn-primary btn-block">Save Preferences</button>
@@ -470,7 +526,7 @@
     </div>
 
     <!-- Export Studio Modal -->
-    <div id="export-modal" class="config-drawer hidden" title="Export Studio">
+    <div id="export-modal" class="config-drawer hidden" title="Export">
       <div class="config-backdrop" id="export-backdrop"></div>
       <div class="config-card">
         <div class="config-header">
@@ -480,20 +536,20 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <h3>Export Career Intelligence Studio</h3>
+            <h3>Export Executive Dossier</h3>
           </div>
           <button id="btn-close-export" class="btn-close">&times;</button>
         </div>
         <div class="config-body">
-          <p class="config-desc">Download a comprehensive, structured report of your career roadmap and portfolio blueprints.</p>
+          <p class="config-desc">Download your complete career dossier including cover letters, 30-60-90 day roadmaps, and ATS scoring.</p>
           <div class="export-options-grid">
             <button type="button" id="btn-export-markdown" class="export-opt-btn">
-              <strong>Markdown Report (.md)</strong>
-              <small>Full formatted dossier with code blueprints</small>
+              <strong>Markdown Dossier (.md)</strong>
+              <small>Full formatted executive report with cover letter</small>
             </button>
             <button type="button" id="btn-export-json" class="export-opt-btn">
               <strong>JSON Audit Schema (.json)</strong>
-              <small>Machine-readable ATS and skill audit payload</small>
+              <small>Machine-readable payload with all 8 tool audits</small>
             </button>
           </div>
         </div>

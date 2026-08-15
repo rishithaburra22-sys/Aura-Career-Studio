@@ -98,7 +98,9 @@ async def health_check():
             "project_idea_generator",
             "github_profile_reviewer",
             "ats_optimizer",
-            "interview_preparator"
+            "interview_preparator",
+            "cover_letter_pitch_generator",
+            "onboarding_roadmap_architect"
         ]
     }
 

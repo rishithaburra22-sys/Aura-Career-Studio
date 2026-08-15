@@ -1,13 +1,15 @@
 """
-Aura Career Studio - Enterprise Career Intelligence Tools
-===========================================================
-Implements 6 specialized AI career agents:
-1. job_search_advisor: Targeted companies, platforms, and networking strategies.
-2. skill_gap_analyzer: In-depth technical gaps and structured learning roadmap.
-3. project_idea_generator: Enterprise portfolio projects designed to prove missing skills.
-4. github_profile_reviewer: Live GitHub REST API portfolio audit and repository mining.
-5. ats_optimizer: Quantified 0-100% ATS score, missing keyword matrix, and XYZ bullet rewrites.
-6. interview_preparator: Role-specific technical & behavioral interview simulations with STAR guidance.
+Aura Career Studio - Executive Talent & Leadership Intelligence Tools
+=======================================================================
+Specialized tools for engineering managers, directors, executives, and high-growth leaders:
+1. job_search_advisor: Targeted executive search firms, tier-1 tech companies, and leadership networks.
+2. skill_gap_analyzer: Strategic competency gaps, architectural leadership, and cross-functional roadmaps.
+3. project_idea_generator: Enterprise portfolio projects and executive system architectures.
+4. github_profile_reviewer: Live GitHub REST API portfolio audit with open-source leadership assessment.
+5. ats_optimizer: Quantified 0-100% ATS score, executive keyword density, and XYZ bullet rewrites.
+6. interview_preparator: Behavioral STAR interview questions and system architecture scenarios.
+7. cover_letter_pitch_generator: AI-crafted personalized Cover Letters and tailored LinkedIn InMail outreach messages.
+8. onboarding_roadmap_architect: 30-60-90 Day strategic impact and onboarding blueprint for landing & excelling in the role.
 """
 
 from __future__ import annotations
@@ -19,7 +21,7 @@ from typing import Dict, Any, Optional, List
 import requests
 from groq import Groq
 
-logger = logging.getLogger("aura_career_tools")
+logger = logging.getLogger("aura_executive_tools")
 logging.basicConfig(level=logging.INFO)
 
 DEFAULT_GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
@@ -34,27 +36,26 @@ def get_groq_client(custom_api_key: Optional[str] = None) -> Groq:
 
 
 # ============================================================================
-# TOOL 1: JOB SEARCH & MARKET INTELLIGENCE ADVISOR
+# TOOL 1: EXECUTIVE JOB SEARCH & MARKET STRATEGIST
 # ============================================================================
 def job_search_advisor(
     resume_text: str,
     target_role: str,
     custom_api_key: Optional[str] = None
 ) -> str:
-    """Provides targeted tech companies, niche job platforms, and application strategies."""
+    """Provides high-growth tech companies, boutique executive recruiters, and warm networking strategies."""
     client = get_groq_client(custom_api_key)
 
     system_prompt = (
-        "You are a Senior Tech Recruiter and Executive Career Strategist. "
-        "Analyze the candidate's resume and target role. Provide an actionable market roadmap with:\n"
-        "1. High-Growth & Tier-1 Companies actively hiring for this role\n"
-        "2. Specialized Job Platforms and niche communities\n"
-        "3. High-Value Application Keywords to optimize recruiter searchability\n"
-        "4. Strategic 30-Day Networking Plan (LinkedIn, Open-Source, warm intros)\n"
-        "Format with clear Markdown headings, bullet points, and bold text."
+        "You are an Executive Tech Recruiter and Leadership Talent Advisor. "
+        "Analyze the candidate's career dossier and target role. Provide an executive market strategy:\n"
+        "1. **Tier-1 Tech Companies & High-Growth Unicorns** actively hiring for this leadership tier\n"
+        "2. **Executive & Specialized Tech Search Platforms** (Otta, Wellfound, LinkedIn Executive, The Muse)\n"
+        "3. **High-Impact Recruiter Keywords** (strategic keywords, cross-functional leadership, governance)\n"
+        "4. **Strategic 30-Day Networking Plan** (Board members, alumni networks, warm leadership introductions)"
     )
 
-    user_prompt = f"Target Role: {target_role}\n\nCandidate Resume Summary:\n{resume_text[:2000]}"
+    user_prompt = f"Target Role: {target_role}\n\nCandidate Resume Summary:\n{resume_text[:2500]}"
 
     try:
         res = client.chat.completions.create(
@@ -69,32 +70,31 @@ def job_search_advisor(
         return res.choices[0].message.content or "No job search recommendations generated."
     except Exception as e:
         logger.error(f"Error in job_search_advisor: {e}")
-        return f"### Strategic Job Search Roadmap\n- **Target Role:** {target_role}\n- **Recommended Platforms:** LinkedIn Jobs, Wellfound (AngelList), Otta, Hacker News 'Who is Hiring'\n- **Action:** Tailor your experience toward {target_role} requirements."
+        return f"### Executive Job Search Strategy for {target_role}\n- **Target Companies:** Stripe, Datadog, Snowflake, OpenAI ecosystem, Apple, Google Cloud.\n- **Platforms:** LinkedIn Executive, Wellfound, Otta, Hacker News 'Who is Hiring'."
 
 
 # ============================================================================
-# TOOL 2: SKILL GAP & LEARNING ROADMAP ANALYZER
+# TOOL 2: STRATEGIC SKILL GAP & LEADERSHIP MATRIX
 # ============================================================================
 def skill_gap_analyzer(
     resume_text: str,
     target_role: str,
     custom_api_key: Optional[str] = None
 ) -> str:
-    """Identifies technical discrepancies between resume and target role requirements."""
+    """Identifies technical discrepancies and architectural leadership gaps."""
     client = get_groq_client(custom_api_key)
 
     system_prompt = (
-        "You are a Principal Engineering Lead and Talent Architect. "
-        "Conduct a rigorous Skill Gap Analysis comparing the resume against industry standards for the target role.\n"
+        "You are a VP of Engineering and Talent Architect. "
+        "Conduct a comprehensive Skill & Competency Gap Analysis comparing the resume against top-tier industry benchmarks for the target role.\n"
         "Include:\n"
-        "1. Core Technical Deficiencies (Missing languages, frameworks, distributed systems patterns)\n"
-        "2. Architectural & System Design Competencies Needed\n"
-        "3. High-Leverage Learning Roadmap with realistic timeframes (Week 1-4, Month 2-3)\n"
-        "4. Top Recommended Documentation, Books, and Interactive Sandboxes\n"
-        "Format with crisp Markdown structure."
+        "1. **Core Technical Deficiencies** (Frameworks, distributed systems patterns, data pipelines)\n"
+        "2. **Architectural & Cross-Functional Competencies Needed**\n"
+        "3. **Strategic 8-Week Upskilling Roadmap with Milestones**\n"
+        "4. **Top Recommended Case Studies, Whitepapers, and Reference Architectures**"
     )
 
-    user_prompt = f"Target Role: {target_role}\n\nResume Details:\n{resume_text[:2000]}"
+    user_prompt = f"Target Role: {target_role}\n\nResume Details:\n{resume_text[:2500]}"
 
     try:
         res = client.chat.completions.create(
@@ -109,11 +109,11 @@ def skill_gap_analyzer(
         return res.choices[0].message.content or "No skill gap analysis generated."
     except Exception as e:
         logger.error(f"Error in skill_gap_analyzer: {e}")
-        return f"### Skill Gap Analysis for {target_role}\n- Prioritize deep hands-on proficiency in target framework requirements.\n- Master cloud deployment and end-to-end testing practices."
+        return f"### Skill Gap Analysis for {target_role}\n- Deepen proficiency in target framework requirements and scalable cloud infrastructure."
 
 
 # ============================================================================
-# TOOL 3: HIGH-IMPACT PORTFOLIO PROJECT ARCHITECT
+# TOOL 3: HIGH-IMPACT PORTFOLIO & SYSTEM ARCHITECT
 # ============================================================================
 def project_idea_generator(
     resume_text: str,
@@ -125,17 +125,17 @@ def project_idea_generator(
     client = get_groq_client(custom_api_key)
 
     system_prompt = (
-        "You are a Staff Software Architect. "
+        "You are a Principal Software Architect. "
         "Design 2-3 High-Impact, Production-Grade Portfolio Projects tailored to bridge the candidate's skill gaps for their target role.\n"
         "For each project provide:\n"
-        "1. **Project Title & Problem Statement** (Solving a non-trivial enterprise problem)\n"
+        "1. **Project Title & Enterprise Value Proposition**\n"
         "2. **Architecture & Tech Stack** (Microservices, DBs, caching, queueing)\n"
         "3. **Key Engineering Highlights** (e.g. Rate-limiting, concurrency, zero-copy parsing)\n"
-        "4. **GitHub Portfolio Polish** (What to highlight in the README, live demo, metrics)\n"
-        "Avoid cliché beginner projects (like basic to-do apps or weather apps). Focus on scalable, production systems."
+        "4. **GitHub Repository Polish** (What to highlight in the README, live demo, metrics)\n"
+        "Avoid basic to-do apps. Focus on scalable distributed systems."
     )
 
-    user_prompt = f"Target Role: {target_role}\n\nResume Summary:\n{resume_text[:1800]}\n\nIdentified Skill Gaps:\n{skill_gaps or 'General industry gaps for role'}"
+    user_prompt = f"Target Role: {target_role}\n\nResume Summary:\n{resume_text[:2000]}\n\nIdentified Skill Gaps:\n{skill_gaps or 'General distributed systems'}"
 
     try:
         res = client.chat.completions.create(
@@ -154,7 +154,7 @@ def project_idea_generator(
 
 
 # ============================================================================
-# TOOL 4: LIVE GITHUB PORTFOLIO & REPOSITORY MINER
+# TOOL 4: GITHUB REPOSITORY & PORTFOLIO AUDITOR
 # ============================================================================
 def github_profile_reviewer(
     username: str,
@@ -180,7 +180,6 @@ def github_profile_reviewer(
     top_repos: List[Dict[str, Any]] = []
 
     try:
-        # Fetch Profile
         u_res = requests.get(f"https://api.github.com/users/{cleaned_user}", headers=headers, timeout=8)
         if u_res.status_code == 200:
             u_json = u_res.json()
@@ -196,7 +195,6 @@ def github_profile_reviewer(
                 "html_url": u_json.get("html_url")
             }
 
-            # Fetch Repositories
             r_res = requests.get(
                 f"https://api.github.com/users/{cleaned_user}/repos?sort=pushed&per_page=6",
                 headers=headers,
@@ -234,10 +232,7 @@ def github_profile_reviewer(
             "4. **Commit & Contribution Cadence Advice**"
         )
 
-        user_prompt = (
-            f"GitHub Profile: {json.dumps(profile_data, indent=2)}\n\n"
-            f"Recent Repositories: {json.dumps(top_repos, indent=2)}"
-        )
+        user_prompt = f"GitHub Profile: {json.dumps(profile_data, indent=2)}\n\nRecent Repositories: {json.dumps(top_repos, indent=2)}"
 
         res = client.chat.completions.create(
             model=DEFAULT_GROQ_MODEL,
@@ -273,25 +268,25 @@ def ats_optimizer(
     client = get_groq_client(custom_api_key)
 
     system_prompt = (
-        "You are an ATS (Applicant Tracking System) Algorithm Auditor. "
+        "You are an ATS Algorithm Auditor. "
         "Evaluate the resume against the target role and output a strict JSON object with this exact schema:\n"
         "{\n"
-        '  "ats_score": 82,\n'
-        '  "score_tier": "Competitive",\n'
-        '  "matched_keywords": ["TypeScript", "FastAPI", "Docker"],\n'
-        '  "missing_keywords": ["Kubernetes", "GraphQL", "System Design"],\n'
+        '  "ats_score": 88,\n'
+        '  "score_tier": "Highly Competitive",\n'
+        '  "matched_keywords": ["TypeScript", "FastAPI", "Docker", "PostgreSQL"],\n'
+        '  "missing_keywords": ["Kubernetes", "GraphQL", "System Design", "Distributed Tracing"],\n'
         '  "bullet_rewrites": [\n'
         '    {\n'
         '      "original": "Worked on backend APIs",\n'
         '      "improved": "Architected 12 high-throughput REST APIs in FastAPI, reducing p99 latency by 35% across 500k daily requests."\n'
         '    }\n'
         "  ],\n"
-        '  "summary_feedback": "Brief overall audit summary"\n'
+        '  "summary_feedback": "Executive audit summary"\n'
         "}\n"
-        "Respond ONLY with valid JSON. No surrounding markdown backticks or commentary."
+        "Respond ONLY with valid JSON. No surrounding markdown backticks."
     )
 
-    user_prompt = f"Target Role: {target_role}\n\nResume Text:\n{resume_text[:2500]}"
+    user_prompt = f"Target Role: {target_role}\n\nResume Text:\n{resume_text[:2800]}"
 
     try:
         res = client.chat.completions.create(
@@ -314,9 +309,9 @@ def ats_optimizer(
     except Exception as e:
         logger.error(f"Error in ats_optimizer: {e}")
         return {
-            "ats_score": 78,
-            "score_tier": "Good Foundation",
-            "matched_keywords": ["Python", "JavaScript", "SQL", "Git"],
+            "ats_score": 82,
+            "score_tier": "Competitive",
+            "matched_keywords": ["Python", "JavaScript", "SQL", "Git", "FastAPI"],
             "missing_keywords": ["Distributed Systems", "Cloud Orchestration", "CI/CD"],
             "bullet_rewrites": [
                 {
@@ -329,7 +324,7 @@ def ats_optimizer(
 
 
 # ============================================================================
-# TOOL 6: TAILORED TECHNICAL & BEHAVIORAL INTERVIEW SIMULATOR
+# TOOL 6: STAR INTERVIEW SIMULATOR
 # ============================================================================
 def interview_preparator(
     resume_text: str,
@@ -340,16 +335,16 @@ def interview_preparator(
     client = get_groq_client(custom_api_key)
 
     system_prompt = (
-        "You are a Bar Raiser and Technical Interviewer at a top tech company. "
+        "You are a Bar Raiser and Executive Interviewer at a top tech company. "
         "Generate a high-yield Interview Preparation Guide based on the candidate's exact background and target role.\n"
         "Provide:\n"
-        "1. **3 Core System Design & Architecture Questions** (Deeply relevant to their experience)\n"
-        "2. **3 Live Coding / Technical Problem Scenarios**\n"
-        "3. **2 Behavioral Questions with STAR Method Structure** (Situation, Task, Action, Result) mapped to their resume\n"
-        "4. **3 Insightful Reverse-Interview Questions** to ask the hiring team"
+        "1. **3 Core System Design & Architecture Questions**\n"
+        "2. **3 Live Coding / Technical Scenarios**\n"
+        "3. **2 Behavioral Questions with STAR Method Guidance**\n"
+        "4. **3 High-Impact Reverse-Interview Questions** to ask the hiring manager"
     )
 
-    user_prompt = f"Target Role: {target_role}\n\nCandidate Background:\n{resume_text[:2200]}"
+    user_prompt = f"Target Role: {target_role}\n\nCandidate Background:\n{resume_text[:2500]}"
 
     try:
         res = client.chat.completions.create(
@@ -364,4 +359,97 @@ def interview_preparator(
         return res.choices[0].message.content or "No interview simulation generated."
     except Exception as e:
         logger.error(f"Error in interview_preparator: {e}")
-        return f"### Tailored Interview Preparation for {target_role}\n- Review system scalability, caching tradeoffs, and concurrency.\n- Prepare 2 STAR format stories detailing complex engineering challenges."
+        return f"### Tailored Interview Preparation for {target_role}\n- Review system scalability, caching tradeoffs, and concurrency."
+
+
+# ============================================================================
+# TOOL 7: AI COVER LETTER & LINKEDIN PITCH GENERATOR (Aura Unique)
+# ============================================================================
+def cover_letter_pitch_generator(
+    resume_text: str,
+    target_role: str,
+    custom_api_key: Optional[str] = None
+) -> Dict[str, Any]:
+    """Generates tailored executive cover letter and 1-click LinkedIn InMail cold outreach pitch."""
+    client = get_groq_client(custom_api_key)
+
+    system_prompt = (
+        "You are an Executive Career Coach and Ghostwriter for top tech talent. "
+        "Generate two high-converting application assets tailored to the candidate's background and target role:\n"
+        "1. **High-Converting Cover Letter** (3 punchy paragraphs: The Hook, The Proof of Impact, The Call to Action)\n"
+        "2. **LinkedIn / InMail Cold Outreach Pitch** (under 120 words, personalized to a hiring manager or VP)\n"
+        "Respond ONLY with a strict JSON object with this exact schema:\n"
+        "{\n"
+        '  "cover_letter": "Dear Hiring Team,\\n\\n...",\n'
+        '  "linkedin_pitch": "Hi [Hiring Manager], I came across the...",\n'
+        '  "executive_hook": "Key 1-sentence value proposition"\n'
+        "}\n"
+        "Respond ONLY with valid JSON."
+    )
+
+    user_prompt = f"Target Role: {target_role}\n\nCandidate Resume:\n{resume_text[:2500]}"
+
+    try:
+        res = client.chat.completions.create(
+            model=DEFAULT_GROQ_MODEL,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.6,
+            max_tokens=1400
+        )
+        content = (res.choices[0].message.content or "").strip()
+        if content.startswith("```json"):
+            content = content.replace("```json", "", 1).rstrip("```").strip()
+        elif content.startswith("```"):
+            content = content.replace("```", "", 1).rstrip("```").strip()
+
+        data = json.loads(content)
+        return data
+    except Exception as e:
+        logger.error(f"Error in cover_letter_pitch_generator: {e}")
+        return {
+            "cover_letter": f"Dear Hiring Team,\n\nI am writing to express my strong interest in the {target_role} position. With my proven track record in software engineering and cloud-native architecture, I look forward to bringing immediate impact to your engineering organization.",
+            "linkedin_pitch": f"Hi [Hiring Manager], I saw your team is hiring for a {target_role}. With my background in high-throughput systems, I would love to connect and share how my experience aligns with your roadmap.",
+            "executive_hook": f"Specialized in high-scale systems and cloud-native engineering for {target_role} positions."
+        }
+
+
+# ============================================================================
+# TOOL 8: 30-60-90 DAY STRATEGIC ONBOARDING ROADMAP (Aura Unique)
+# ============================================================================
+def onboarding_roadmap_architect(
+    resume_text: str,
+    target_role: str,
+    custom_api_key: Optional[str] = None
+) -> str:
+    """Creates a strategic 30-60-90 Day high-impact plan for landing the job and excelling in the first 90 days."""
+    client = get_groq_client(custom_api_key)
+
+    system_prompt = (
+        "You are an Executive Leadership Coach and VP of Engineering. "
+        "Create a strategic **30-60-90 Day Impact Plan** for the candidate in their target role.\n"
+        "Provide:\n"
+        "1. **Days 1-30: Discovery & Quick Wins** (Codebase mastery, team alignment, initial PRs)\n"
+        "2. **Days 31-60: Ownership & Optimization** (Driving core architectural initiatives, unblocking teammates)\n"
+        "3. **Days 61-90: Scale & Strategic Leadership** (Mentorship, cross-functional delivery, technical roadmap contribution)\n"
+        "4. **Key Executive KPIs** to measure success"
+    )
+
+    user_prompt = f"Target Role: {target_role}\n\nCandidate Profile:\n{resume_text[:2500]}"
+
+    try:
+        res = client.chat.completions.create(
+            model=DEFAULT_GROQ_MODEL,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.6,
+            max_tokens=1500
+        )
+        return res.choices[0].message.content or "No 30-60-90 day roadmap generated."
+    except Exception as e:
+        logger.error(f"Error in onboarding_roadmap_architect: {e}")
+        return f"### 30-60-90 Day Strategic Plan for {target_role}\n- **Days 1-30:** Deep dive into system architecture and deliver early quick wins.\n- **Days 31-60:** Take ownership of core services.\n- **Days 61-90:** Drive long-term scalability and mentor engineers."
